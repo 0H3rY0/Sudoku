@@ -1,5 +1,11 @@
+import MainTemplate from "./templates/MainTemplate";
+
 function App() {
-  return <h1 className="text-red-500">Test test</h1>;
+  return (
+    <MainTemplate>
+      <div>hello</div>
+    </MainTemplate>
+  );
 }
 
 export default App;
