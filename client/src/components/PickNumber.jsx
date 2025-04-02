@@ -8,6 +8,7 @@ const PickNumber = () => {
         {[...Array(9)].map((_, i) => {
           return (
             <input
+              key={i}
               type="button"
               className="bg-purple-200 text-blue-500 text-3xl flex justify-center items-center rounded-md"
               value={i}
