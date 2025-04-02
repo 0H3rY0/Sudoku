@@ -1,5 +1,6 @@
 import DifficultyLevel from "./components/DifficultyLevel";
 import GameBoard from "./components/GameBoard";
+import GameOptions from "./components/GameOptions";
 import PickNumber from "./components/PickNumber";
 import MainTemplate from "./templates/MainTemplate";
 
@@ -15,6 +16,7 @@ function App() {
             <GameBoard />
           </div>
           <div>
+            <GameOptions />
             <PickNumber />
           </div>
         </div>
