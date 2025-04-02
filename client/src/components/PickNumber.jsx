@@ -10,7 +10,7 @@ const PickNumber = () => {
             <input
               key={i}
               type="button"
-              className="bg-purple-200 text-blue-500 text-3xl flex justify-center items-center rounded-md"
+              className="bg-purple-200 text-blue-500 text-3xl flex justify-center items-center rounded-md hover:bg-purple-300"
               value={i}
             />
           );
