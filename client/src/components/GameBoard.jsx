@@ -1,63 +1,7 @@
-// import { useState } from "react";
-
 import { useBoard } from "../providers/BoardProvider";
-
-// const initialBoard = [
-//   [5, 3, 0, 0, 7, 0, 0, 0, 0],
-//   [6, 0, 0, 1, 9, 5, 0, 0, 0],
-//   [0, 9, 8, 0, 0, 0, 0, 6, 0],
-//   [8, 0, 0, 0, 6, 0, 0, 0, 3],
-//   [4, 0, 0, 8, 0, 3, 0, 0, 1],
-//   [7, 0, 0, 0, 2, 0, 0, 0, 6],
-//   [0, 6, 0, 0, 0, 0, 2, 8, 0],
-//   [0, 0, 0, 4, 1, 9, 0, 0, 5],
-//   [0, 0, 0, 0, 8, 0, 0, 7, 9],
-// ];
 
 const GameBoard = () => {
   const { board, selectedCell, initialBoard, handleCellClick } = useBoard();
-
-  // const [board, setBoard] = useState(initialBoard);
-  // const [selectedCell, setSelectedCell] = useState(null);
-
-  // const handleCellClick = (row, col) => {
-  //   setSelectedCell({ row, col });
-  // };
-
-  // const handleNumberInput = (num) => {
-  //   if (!selectedCell) return;
-  //   const { row, col } = selectedCell;
-
-  //   // Nie nadpisuj pól z oryginalnej planszy
-  //   if (initialBoard[row][col] !== 0) return;
-
-  //   const newBoard = board.map((r) => [...r]);
-  //   newBoard[row][col] = num;
-
-  //   if (isValidMove(newBoard, row, col, num)) {
-  //     setBoard(newBoard);
-  //   } else {
-  //     alert("Niepoprawny ruch!");
-  //   }
-  // };
-
-  // const isValidMove = (board, row, col, num) => {
-  //   for (let i = 0; i < 9; i++) {
-  //     if (i !== col && board[row][i] === num) return false;
-  //     if (i !== row && board[i][col] === num) return false;
-  //   }
-
-  //   const startRow = Math.floor(row / 3) * 3;
-  //   const startCol = Math.floor(col / 3) * 3;
-
-  //   for (let r = startRow; r < startRow + 3; r++) {
-  //     for (let c = startCol; c < startCol + 3; c++) {
-  //       if ((r !== row || c !== col) && board[r][c] === num) return false;
-  //     }
-  //   }
-
-  //   return true;
-  // };
 
   return (
     <div>
@@ -87,18 +31,6 @@ const GameBoard = () => {
           })}
         </div>
       </div>
-
-      {/* <div className="mt-4 grid grid-cols-9 gap-2 w-[30rem]">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-          <button
-            key={num}
-            onClick={() => handleNumberInput(num)}
-            className="bg-blue-500 text-white rounded-xl py-2 hover:bg-blue-600"
-          >
-            {num}
-          </button>
-        ))}
-      </div> */}
     </div>
   );
 };
