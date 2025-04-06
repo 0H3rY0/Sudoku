@@ -17,6 +17,8 @@ const initialBoard = [
 export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState(initialBoard);
   const [selectedCell, setSelectedCell] = useState(null);
+  const [invalidCells, setInvalidCells] = useState([]);
+  const [validCells, setValidCells] = useState([]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
@@ -26,7 +28,6 @@ export const BoardProvider = ({ children }) => {
     if (!selectedCell) return;
     const { row, col } = selectedCell;
 
-    // Nie nadpisuj pól z oryginalnej planszy
     if (initialBoard[row][col] !== 0) return;
 
     const newBoard = board.map((r) => [...r]);
@@ -34,8 +35,19 @@ export const BoardProvider = ({ children }) => {
 
     if (isValidMove(newBoard, row, col, num)) {
       setBoard(newBoard);
+      setValidCells((prev) => [
+        ...prev.filter((cell) => !(cell.row === row && cell.col === col)),
+        { row, col },
+      ]);
+      setInvalidCells((prev) =>
+        prev.filter((cell) => !(cell.row === row && cell.col === col))
+      );
     } else {
-      alert("Niepoprawny ruch!");
+      setBoard(newBoard);
+      setInvalidCells((prev) => [...prev, { row, col }]);
+      setValidCells((prev) =>
+        prev.filter((cell) => !(cell.row === row && cell.col === col))
+      );
     }
   };
 
@@ -66,6 +78,8 @@ export const BoardProvider = ({ children }) => {
         board,
         selectedCell,
         initialBoard,
+        invalidCells,
+        validCells,
       }}
     >
       {children}
@@ -73,5 +87,4 @@ export const BoardProvider = ({ children }) => {
   );
 };
 
-// 3. Hook ułatwiający używanie kontekstu
 export const useBoard = () => useContext(BoardContext);

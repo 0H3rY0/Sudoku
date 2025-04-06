@@ -1,7 +1,20 @@
 import { useBoard } from "../providers/BoardProvider";
 
 const GameBoard = () => {
-  const { board, selectedCell, initialBoard, handleCellClick } = useBoard();
+  const {
+    board,
+    selectedCell,
+    initialBoard,
+    handleCellClick,
+    invalidCells,
+    validCells,
+  } = useBoard();
+
+  const isInvalid = (row, col) =>
+    invalidCells.some((cell) => cell.row === row && cell.col === col);
+
+  const isValid = (row, col) =>
+    validCells.some((cell) => cell.row === row && cell.col === col);
 
   return (
     <div>
@@ -22,8 +35,15 @@ const GameBoard = () => {
                 ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
                 ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
                 ${isSelected ? "bg-yellow-200" : ""}
-                ${isInitial ? "text-black" : "text-blue-600"}
-                `}
+                ${
+                  isInitial
+                    ? "text-black"
+                    : isInvalid(row, col)
+                    ? "text-red-600"
+                    : isValid(row, col)
+                    ? "text-blue-600"
+                    : "text-black"
+                }`}
               >
                 {cell !== 0 ? cell : ""}
               </div>
