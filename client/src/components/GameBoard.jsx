@@ -1,23 +1,55 @@
-const GameBoard = () => {
-  return (
-    <div className="w-[30rem] h-[30rem] border-4 border-black">
-      <div className="grid grid-cols-9 grid-rows-9 h-full w-full">
-        {[...Array(81)].map((_, i) => {
-          const row = Math.floor(i / 9);
-          const col = i % 9;
+import { useBoard } from "../providers/BoardProvider";
 
-          return (
-            <div
-              key={i}
-              className={`flex items-center justify-center border border-gray-400 text-xl font-bold w-full h-full
-              ${col % 3 === 2 && col !== 8 ? "border-r-4 border-black" : ""} 
-              ${row % 3 === 2 && row !== 8 ? "border-b-4 border-black" : ""}
-              `}
-            >
-              {/* Tu wstawisz cyfry */}
-            </div>
-          );
-        })}
+const GameBoard = () => {
+  const {
+    board,
+    selectedCell,
+    initialBoard,
+    handleCellClick,
+    invalidCells,
+    validCells,
+  } = useBoard();
+
+  const isInvalid = (row, col) =>
+    invalidCells.some((cell) => cell.row === row && cell.col === col);
+
+  const isValid = (row, col) =>
+    validCells.some((cell) => cell.row === row && cell.col === col);
+
+  return (
+    <div>
+      <div className="w-[30rem] h-[30rem] border-4 border-black">
+        <div className="grid grid-cols-9 grid-rows-9 h-full w-full">
+          {board.flat().map((cell, i) => {
+            const row = Math.floor(i / 9);
+            const col = i % 9;
+            const isSelected =
+              selectedCell?.row === row && selectedCell?.col === col;
+            const isInitial = initialBoard[row][col] !== 0;
+
+            return (
+              <div
+                key={i}
+                onClick={() => handleCellClick(row, col)}
+                className={`flex items-center justify-center border text-xl font-bold cursor-pointer select-none
+                ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
+                ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
+                ${isSelected ? "bg-yellow-200" : ""}
+                ${
+                  isInitial
+                    ? "text-black"
+                    : isInvalid(row, col)
+                    ? "text-red-600"
+                    : isValid(row, col)
+                    ? "text-blue-600"
+                    : "text-black"
+                }`}
+              >
+                {cell !== 0 ? cell : ""}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
