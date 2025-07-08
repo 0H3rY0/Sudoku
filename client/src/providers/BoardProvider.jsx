@@ -67,13 +67,12 @@ export const BoardProvider = ({ children }) => {
   const [initialBoard] = useState(() => removeCells(solvedBoard, 36));
   const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
   const [selectedCell, setSelectedCell] = useState(null);
-  const [validCells, setValidCells] = useState([]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
   };
 
-  const handleNumberInput = (num) => {
+  const InsertValue = (num) => {
     if (!selectedCell) return;
     const { row, col } = selectedCell;
 
@@ -84,15 +83,8 @@ export const BoardProvider = ({ children }) => {
 
     if (isValidMove(row, col, num)) {
       setBoard(newBoard);
-      setValidCells((prev) => [
-        ...prev.filter((cell) => !(cell.row === row && cell.col === col)),
-        { row, col },
-      ]);
     } else {
       setBoard(newBoard);
-      setValidCells((prev) =>
-        prev.filter((cell) => !(cell.row === row && cell.col === col))
-      );
     }
   };
 
@@ -107,9 +99,8 @@ export const BoardProvider = ({ children }) => {
         initialBoard,
         board,
         selectedCell,
-        validCells,
         handleCellClick,
-        handleNumberInput,
+        InsertValue,
       }}
     >
       {children}
