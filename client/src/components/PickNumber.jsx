@@ -3,7 +3,7 @@ import NewGameButton from "./NewGameButton";
 import { useBoard } from "../providers/BoardProvider";
 
 const PickNumber = () => {
-  const { handleNumberInput } = useBoard();
+  const { InsertValue } = useBoard();
 
   return (
     <div className="flex flex-col gap-2">
@@ -15,7 +15,7 @@ const PickNumber = () => {
               type="button"
               className="bg-purple-200 text-blue-500 text-3xl flex justify-center items-center rounded-md hover:bg-purple-300"
               value={i + 1}
-              onClick={() => handleNumberInput(i + 1)}
+              onClick={() => InsertValue(i + 1)}
             />
           );
         })}
