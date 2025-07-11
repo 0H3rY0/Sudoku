@@ -12,6 +12,7 @@ export const BoardProvider = ({ children }) => {
   const [initialBoard] = useState(() => removeCells(solvedBoard, 36));
   const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
   const [selectedCell, setSelectedCell] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
@@ -22,6 +23,8 @@ export const BoardProvider = ({ children }) => {
     const { row, col } = selectedCell;
     if (initialBoard[row][col] !== 0) return;
 
+    setHistory((prev) => [...prev, board.map((r) => [...r])]);
+
     const newBoard = board.map((r) => [...r]);
     newBoard[row][col] = num;
     setBoard(newBoard);
@@ -31,7 +34,13 @@ export const BoardProvider = ({ children }) => {
     return solvedBoard[row][col] === num;
   };
 
-  const undoMove = () => {};
+  const undoMove = () => {
+    if (history.length === 0) return;
+
+    const previousBoard = history[history.length - 1];
+    setBoard(previousBoard);
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+  };
 
   const clearPickedMove = () => {
     const { row, col } = selectedCell;
@@ -45,6 +54,8 @@ export const BoardProvider = ({ children }) => {
       newBoard[row][col] = 0;
       return newBoard;
     });
+
+    setHistory((prev) => [...prev, board.map((r) => [...r])]);
   };
 
   return (
@@ -57,6 +68,7 @@ export const BoardProvider = ({ children }) => {
         handleCellClick,
         InsertValue,
         clearPickedMove,
+        undoMove,
       }}
     >
       {children}
