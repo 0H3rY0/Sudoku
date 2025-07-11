@@ -1,6 +1,6 @@
 import React from "react";
 import NewGameButton from "./NewGameButton";
-import { useBoard } from "../providers/BoardProvider";
+import { useBoard } from "../context/BoardContext";
 
 const PickNumber = () => {
   const { InsertValue } = useBoard();
