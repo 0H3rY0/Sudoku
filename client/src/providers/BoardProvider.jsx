@@ -31,6 +31,22 @@ export const BoardProvider = ({ children }) => {
     return solvedBoard[row][col] === num;
   };
 
+  const undoMove = () => {};
+
+  const clearPickedMove = () => {
+    const { row, col } = selectedCell;
+
+    if (initialBoard[row][col] !== 0) {
+      return;
+    }
+
+    setBoard((prevBoard) => {
+      const newBoard = prevBoard.map((row) => [...row]);
+      newBoard[row][col] = 0;
+      return newBoard;
+    });
+  };
+
   return (
     <BoardContext.Provider
       value={{
@@ -40,6 +56,7 @@ export const BoardProvider = ({ children }) => {
         selectedCell,
         handleCellClick,
         InsertValue,
+        clearPickedMove,
       }}
     >
       {children}
