@@ -1,4 +1,4 @@
-import { useBoard } from "../providers/BoardProvider";
+import { useBoard } from "../context/BoardContext";
 
 const GameBoard = () => {
   const { board, initialBoard, solvedBoard, selectedCell, handleCellClick } =
