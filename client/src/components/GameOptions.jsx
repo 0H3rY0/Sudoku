@@ -7,12 +7,14 @@ import { useBoard } from "../context/BoardContext";
 const GameOptions = () => {
   const { clearPickedMove, undoMove } = useBoard();
 
+  const { mistakes } = useBoard();
+
   return (
     <>
       <div className="flex justify-between mb-2 ">
         <div>
           <p className="text-gray-400 font-extrabold text-md flex ">
-            Mistakes: 1/3
+            Mistakes: {mistakes}/3
           </p>
         </div>
         <div className="text-gray-400 font-extrabold text-md flex">

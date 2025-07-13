@@ -13,6 +13,7 @@ export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
   const [selectedCell, setSelectedCell] = useState(null);
   const [history, setHistory] = useState([]);
+  const [mistakes, setMistakes] = useState(0);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
@@ -27,7 +28,14 @@ export const BoardProvider = ({ children }) => {
 
     const newBoard = board.map((r) => [...r]);
     newBoard[row][col] = num;
+
     setBoard(newBoard);
+
+    if (isValidMove(row, col, num)) {
+      return;
+    } else {
+      setMistakes((prev) => (prev += 1));
+    }
   };
 
   const isValidMove = (row, col, num) => {
@@ -65,6 +73,7 @@ export const BoardProvider = ({ children }) => {
         initialBoard,
         board,
         selectedCell,
+        mistakes,
         handleCellClick,
         InsertValue,
         clearPickedMove,
