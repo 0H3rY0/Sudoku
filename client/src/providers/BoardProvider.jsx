@@ -2,7 +2,7 @@ import { useState } from "react";
 import BoardContext from "../context/BoardContext";
 import { generateEmptyBoard, fillBoard, removeCells } from "./boardUtils";
 
-export const BoardProvider = ({ children }) => {
+export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [solvedBoard] = useState(() => {
     const board = generateEmptyBoard();
     fillBoard(board);
@@ -13,7 +13,6 @@ export const BoardProvider = ({ children }) => {
   const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
   const [selectedCell, setSelectedCell] = useState(null);
   const [history, setHistory] = useState([]);
-  const [mistakes, setMistakes] = useState(0);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });

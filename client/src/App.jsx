@@ -1,3 +1,4 @@
+import { useState } from "react";
 import DifficultyLevel from "./components/DifficultyLevel";
 import GameBoard from "./components/GameBoard";
 import GameOptions from "./components/GameOptions";
@@ -6,24 +7,30 @@ import { BoardProvider } from "./providers/BoardProvider";
 import MainTemplate from "./templates/MainTemplate";
 
 function App() {
+  const [mistakes, setMistakes] = useState(0);
+
   return (
     <MainTemplate>
-      <BoardProvider>
-        <div className="flex flex-col gap-3">
-          <div>
-            <DifficultyLevel />
-          </div>
-          <div className="flex gap-5">
+      {mistakes > 3 ? (
+        <div>Game over</div>
+      ) : (
+        <BoardProvider mistakes={mistakes} setMistakes={setMistakes}>
+          <div className="flex flex-col gap-3">
             <div>
-              <GameBoard />
+              <DifficultyLevel />
             </div>
-            <div>
-              <GameOptions />
-              <PickNumber />
+            <div className="flex gap-5">
+              <div>
+                <GameBoard />
+              </div>
+              <div>
+                <GameOptions />
+                <PickNumber />
+              </div>
             </div>
           </div>
-        </div>
-      </BoardProvider>
+        </BoardProvider>
+      )}
     </MainTemplate>
   );
 }
