@@ -1,45 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BoardContext from "../context/BoardContext";
 import { generateEmptyBoard, fillBoard, removeCells } from "./boardUtils";
 
 export const BoardProvider = ({ children, mistakes, setMistakes }) => {
-  const [solvedBoard] = useState(() => {
-    const board = generateEmptyBoard();
-    fillBoard(board);
-    return board;
-  });
-
-  const [initialBoard] = useState(() => removeCells(solvedBoard, 36));
-  const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
+  const [solvedBoard, setSolvedBoard] = useState(null);
+  const [initialBoard, setInitialBoard] = useState(null);
+  const [board, setBoard] = useState(null);
   const [selectedCell, setSelectedCell] = useState(null);
   const [history, setHistory] = useState([]);
   const [notesMode, setNotesMode] = useState(false);
+
+  useEffect(() => {
+    const solved = generateEmptyBoard();
+    fillBoard(solved);
+    const puzzle = removeCells(solved, 36);
+
+    const userBoard = puzzle.map((row) =>
+      row.map((cell) =>
+        typeof cell === "object" ? { ...cell } : { value: cell, notes: [] }
+      )
+    );
+
+    setSolvedBoard(solved);
+    setInitialBoard(userBoard);
+    setBoard(userBoard);
+  }, []);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
   };
 
-  const InsertValue = (num) => {
-    if (!selectedCell) return;
-    const { row, col } = selectedCell;
-    if (initialBoard[row][col] !== 0) return;
-
-    setHistory((prev) => [...prev, board.map((r) => [...r])]);
-
-    const newBoard = board.map((r) => [...r]);
-    newBoard[row][col] = num;
-
-    setBoard(newBoard);
-
-    if (isValidMove(row, col, num)) {
-      return;
-    } else {
-      setMistakes((prev) => (prev += 1));
-    }
-  };
-
   const isValidMove = (row, col, num) => {
     return solvedBoard[row][col] === num;
+  };
+
+  const InsertValue = (num) => {
+    if (!selectedCell || !board || !initialBoard) return;
+    const { row, col } = selectedCell;
+
+    if (initialBoard[row][col].value !== 0) return;
+
+    setHistory((prev) => [
+      ...prev,
+      board.map((r) => r.map((cell) => ({ ...cell }))),
+    ]);
+
+    const newBoard = board.map((r) => r.map((cell) => ({ ...cell })));
+
+    if (notesMode) {
+      const notes = newBoard[row][col].notes || [];
+      if (notes.includes(num)) {
+        newBoard[row][col].notes = notes.filter((n) => n !== num);
+      } else {
+        newBoard[row][col].notes = [...notes, num].sort();
+      }
+    } else {
+      newBoard[row][col].value = num;
+      newBoard[row][col].notes = [];
+
+      if (!isValidMove(row, col, num)) {
+        setMistakes((prev) => prev + 1);
+      }
+    }
+
+    setBoard(newBoard);
   };
 
   const undoMove = () => {
@@ -51,19 +75,22 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   };
 
   const clearPickedMove = () => {
+    if (!selectedCell || !initialBoard || !board) return;
     const { row, col } = selectedCell;
 
-    if (initialBoard[row][col] !== 0) {
-      return;
-    }
+    if (initialBoard[row][col].value !== 0) return;
+
+    setHistory((prev) => [
+      ...prev,
+      board.map((r) => r.map((cell) => ({ ...cell }))),
+    ]);
 
     setBoard((prevBoard) => {
-      const newBoard = prevBoard.map((row) => [...row]);
-      newBoard[row][col] = 0;
+      const newBoard = prevBoard.map((r) => r.map((cell) => ({ ...cell })));
+      newBoard[row][col].value = 0;
+      newBoard[row][col].notes = [];
       return newBoard;
     });
-
-    setHistory((prev) => [...prev, board.map((r) => [...r])]);
   };
 
   return (
@@ -73,13 +100,14 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         initialBoard,
         board,
         selectedCell,
-        mistakes,
-        notesMode,
-        setNotesMode,
         handleCellClick,
         InsertValue,
         clearPickedMove,
         undoMove,
+        notesMode,
+        setNotesMode,
+        mistakes,
+        setMistakes,
       }}
     >
       {children}
