@@ -13,6 +13,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [board, setBoard] = useState(() => initialBoard.map((row) => [...row]));
   const [selectedCell, setSelectedCell] = useState(null);
   const [history, setHistory] = useState([]);
+  const [notesMode, setNotesMode] = useState(false);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
@@ -73,6 +74,8 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         board,
         selectedCell,
         mistakes,
+        notesMode,
+        setNotesMode,
         handleCellClick,
         InsertValue,
         clearPickedMove,

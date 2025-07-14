@@ -5,9 +5,8 @@ import { BsPencil } from "react-icons/bs";
 import { useBoard } from "../context/BoardContext";
 
 const GameOptions = () => {
-  const { clearPickedMove, undoMove } = useBoard();
-
-  const { mistakes } = useBoard();
+  const { clearPickedMove, undoMove, mistakes, notesMode, setNotesMode } =
+    useBoard();
 
   return (
     <>
@@ -35,8 +34,24 @@ const GameOptions = () => {
         >
           <PiEraser size={32} />
         </div>
-        <div className="w-14 h-14 flex items-center justify-center bg-purple-200 rounded-full hover:bg-purple-300">
+        <div
+          className={`relative w-14 h-14 flex items-center 
+          justify-center bg-purple-200 rounded-full hover:bg-purple-300 cursor-pointer box-border
+          ${
+            notesMode
+              ? "border-2 border-blue-500"
+              : "border-2 border-transparent"
+          }`}
+          onClick={() => setNotesMode((prev) => !prev)}
+        >
           <BsPencil size={32} />
+          <div
+            className={`absolute top-[-25%] left-[50%] bg-slate-300 
+          w-10 h-8 rounded-full flex items-center justify-center 
+           ${notesMode ? "bg-blue-500 text-white" : ""} `}
+          >
+            {notesMode ? "ON" : "OFF"}
+          </div>
         </div>
         <div className="w-14 h-14 flex items-center justify-center bg-purple-200 rounded-full hover:bg-purple-300">
           <FaRegLightbulb size={32} />
