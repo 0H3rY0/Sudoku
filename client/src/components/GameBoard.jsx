@@ -5,13 +5,19 @@ const GameBoard = () => {
     useBoard();
 
   const getCellColor = (row, col) => {
-    const value = board[row][col];
-    const isInitial = initialBoard[row][col] !== 0;
+    const { value } = board[row][col];
+    const isInitial = initialBoard[row][col].value !== 0;
 
     if (isInitial) return "text-black";
     if (value === 0) return "";
-    return value === solvedBoard[row][col] ? "text-blue-600" : "text-red-600";
+    return value === solvedBoard[row][col].value
+      ? "text-blue-600"
+      : "text-red-600";
   };
+
+  if (!board) {
+    return "loading";
+  }
 
   return (
     <div>
@@ -23,17 +29,32 @@ const GameBoard = () => {
             const isSelected =
               selectedCell?.row === row && selectedCell?.col === col;
 
+            const { value, notes } = cell;
+
             return (
               <div
                 key={i}
                 onClick={() => handleCellClick(row, col)}
-                className={`flex items-center justify-center border text-xl font-bold cursor-pointer select-none
+                className={`relative flex items-center justify-center border text-xl font-bold cursor-pointer select-none
                   ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
                   ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
                   ${isSelected ? "bg-yellow-200" : ""}
                   ${getCellColor(row, col)}`}
               >
-                {cell !== 0 ? cell : ""}
+                {value !== 0 ? (
+                  value
+                ) : (
+                  <div className="absolute inset-1 grid grid-cols-3 text-xs text-gray-500">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                      <div
+                        key={n}
+                        className={notes.includes(n) ? "" : "invisible"}
+                      >
+                        {n}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}
