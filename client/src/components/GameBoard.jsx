@@ -1,8 +1,11 @@
 import { useBoard } from "../context/BoardContext";
+import { useState } from "react";
 
 const GameBoard = () => {
   const { board, initialBoard, solvedBoard, selectedCell, handleCellClick } =
     useBoard();
+
+  const [sameValueCells, setSameValueCells] = useState([]);
 
   const getCellColor = (row, col) => {
     const { value } = board[row][col];
@@ -27,6 +30,33 @@ const GameBoard = () => {
     return sameRow || sameCol || sameBox;
   };
 
+  const isSameNumber = (row, col) => {
+    const selectedValue = board[row][col].value;
+    if (selectedValue === 0) {
+      setSameValueCells([]);
+      return;
+    }
+
+    const cells = [];
+
+    board.forEach((r, rowIndex) => {
+      r.forEach((cell, colIndex) => {
+        if (
+          cell.value === selectedValue &&
+          (rowIndex !== row || colIndex !== col)
+        ) {
+          cells.push(`${rowIndex}-${colIndex}`);
+        }
+      });
+    });
+
+    setSameValueCells(cells);
+  };
+
+  const isSameValueCell = (row, col) => {
+    return sameValueCells.includes(`${row}-${col}`);
+  };
+
   if (!board) {
     return "loading";
   }
@@ -46,7 +76,10 @@ const GameBoard = () => {
             return (
               <div
                 key={i}
-                onClick={() => handleCellClick(row, col)}
+                onClick={() => {
+                  handleCellClick(row, col);
+                  isSameNumber(row, col);
+                }}
                 className={`relative flex items-center justify-center border text-xl font-bold cursor-pointer select-none
                     ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
                     ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
@@ -56,6 +89,7 @@ const GameBoard = () => {
                         ? "bg-blue-100"
                         : ""
                     }
+                    ${isSameValueCell(row, col) ? "bg-green-200" : ""}
                     ${getCellColor(row, col)}`}
               >
                 {value !== 0 ? (
