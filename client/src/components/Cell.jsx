@@ -28,6 +28,7 @@ const Cell = ({
         ${isSelected ? "bg-yellow-200" : ""}
         ${!isSelected && isRelated ? "bg-blue-100" : ""}
         ${isSameValue ? "bg-green-200" : ""}
+        ${isSameValue && isRelated ? "bg-red-200" : ""}
         ${getTextColor()}`}
     >
       {value !== 0 ? value : <Notes notes={notes} />}

@@ -1,12 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useBoard } from "../context/BoardContext";
 import Cell from "./Cell";
 import { findSameValueCells } from "../providers/boardUtils";
 
 const GameBoard = () => {
-  const { board, initialBoard, solvedBoard, selectedCell, handleCellClick } =
-    useBoard();
-  const [sameValueCells, setSameValueCells] = useState([]);
+  const {
+    board,
+    initialBoard,
+    solvedBoard,
+    selectedCell,
+    handleCellClick,
+    sameValueCells,
+    setSameValueCells,
+  } = useBoard();
 
   const isRelatedCell = (row, col) => {
     if (!selectedCell) return false;
