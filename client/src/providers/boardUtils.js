@@ -51,3 +51,23 @@ export const removeCells = (board, clues = 36) => {
 
   return newBoard;
 };
+
+export const findSameValueCells = (board, row, col) => {
+  const selectedValue = board[row][col].value;
+  if (selectedValue === 0) return [];
+
+  const cells = [];
+
+  board.forEach((r, rowIndex) => {
+    r.forEach((cell, colIndex) => {
+      if (
+        cell.value === selectedValue &&
+        (rowIndex !== row || colIndex !== col)
+      ) {
+        cells.push(`${rowIndex}-${colIndex}`);
+      }
+    });
+  });
+
+  return cells;
+};
