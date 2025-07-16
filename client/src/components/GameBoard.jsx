@@ -15,6 +15,18 @@ const GameBoard = () => {
       : "text-red-600";
   };
 
+  const isRelatedCell = (row, col) => {
+    if (!selectedCell) return false;
+
+    const sameRow = selectedCell.row === row;
+    const sameCol = selectedCell.col === col;
+    const sameBox =
+      Math.floor(selectedCell.row / 3) === Math.floor(row / 3) &&
+      Math.floor(selectedCell.col / 3) === Math.floor(col / 3);
+
+    return sameRow || sameCol || sameBox;
+  };
+
   if (!board) {
     return "loading";
   }
@@ -36,10 +48,15 @@ const GameBoard = () => {
                 key={i}
                 onClick={() => handleCellClick(row, col)}
                 className={`relative flex items-center justify-center border text-xl font-bold cursor-pointer select-none
-                  ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
-                  ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
-                  ${isSelected ? "bg-yellow-200" : ""}
-                  ${getCellColor(row, col)}`}
+                    ${col % 3 === 2 && col !== 8 ? "border-r-4" : ""}
+                    ${row % 3 === 2 && row !== 8 ? "border-b-4" : ""}
+                    ${isSelected ? "bg-yellow-200" : ""}
+                    ${
+                      !isSelected && isRelatedCell(row, col)
+                        ? "bg-blue-100"
+                        : ""
+                    }
+                    ${getCellColor(row, col)}`}
               >
                 {value !== 0 ? (
                   value
