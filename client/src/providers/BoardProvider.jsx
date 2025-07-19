@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import BoardContext from "../context/BoardContext";
 import { generateEmptyBoard, fillBoard, removeCells } from "./boardUtils";
+import { findSameValueCells } from "./boardUtils";
 
 export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [solvedBoard, setSolvedBoard] = useState(null);
@@ -9,6 +10,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [history, setHistory] = useState([]);
   const [notesMode, setNotesMode] = useState(false);
+  const [sameValueCells, setSameValueCells] = useState([]);
 
   useEffect(() => {
     const solved = generateEmptyBoard();
@@ -63,6 +65,9 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
       }
     }
 
+    const sameCells = findSameValueCells(newBoard, row, col);
+    setSameValueCells(sameCells);
+
     setBoard(newBoard);
   };
 
@@ -108,6 +113,8 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         setNotesMode,
         mistakes,
         setMistakes,
+        sameValueCells,
+        setSameValueCells,
       }}
     >
       {children}
