@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { IoClose } from "react-icons/io5";
 import { BsClipboard2Check } from "react-icons/bs";
 
-const Test = ({ children }) => {
+const GameOptionsModal = ({ children }) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
@@ -45,4 +45,4 @@ const Test = ({ children }) => {
   );
 };
 
-export default Test;
+export default GameOptionsModal;
