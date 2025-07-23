@@ -7,17 +7,19 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [solvedBoard, setSolvedBoard] = useState(null);
   const [initialBoard, setInitialBoard] = useState(null);
   const [board, setBoard] = useState(null);
-  const [selectedCell, setSelectedCell] = useState(null); // probalby delated
-  const [history, setHistory] = useState([]); // probably deleted
+  const [selectedCell, setSelectedCell] = useState(null);
+  const [history, setHistory] = useState([]);
   const [notesMode, setNotesMode] = useState(false);
-  const [sameValueCells, setSameValueCells] = useState([]); // probably delated
-  const [initialRemovedCellsNumber, setInitialRemovedCellsNumber] =
-    useState(60);
+  const [sameValueCells, setSameValueCells] = useState([]);
+  const [initialRemovedCellsNumber, setInitialRemovedCellsNumber] = useState({
+    removeCells: 60,
+    newGame: false,
+  });
 
   useEffect(() => {
     const solved = generateEmptyBoard();
     fillBoard(solved);
-    const puzzle = removeCells(solved, initialRemovedCellsNumber);
+    const puzzle = removeCells(solved, initialRemovedCellsNumber.removeCells);
 
     const userBoard = puzzle.map((row) =>
       row.map((cell) =>

@@ -6,6 +6,14 @@ import { useBoard } from "../../context/BoardContext";
 const GameOptionsModal = ({ children }) => {
   const { setInitialRemovedCellsNumber } = useBoard();
 
+  const handleLevelSelect = (cellsToRemove) => {
+    setInitialRemovedCellsNumber((prev) => ({
+      ...prev,
+      newGame: !prev.newGame,
+      removeCells: cellsToRemove,
+    }));
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
@@ -26,7 +34,7 @@ const GameOptionsModal = ({ children }) => {
                 <Dialog.Close asChild>
                   <li
                     className="list-item"
-                    onClick={() => setInitialRemovedCellsNumber(60)}
+                    onClick={() => handleLevelSelect(60)}
                   >
                     <BsClipboard2Check size={26} />
                     Easy
@@ -36,7 +44,7 @@ const GameOptionsModal = ({ children }) => {
                 <Dialog.Close asChild>
                   <li
                     className="list-item"
-                    onClick={() => setInitialRemovedCellsNumber(54)}
+                    onClick={() => handleLevelSelect(54)}
                   >
                     <BsClipboard2Check size={26} />
                     Medium
@@ -46,7 +54,7 @@ const GameOptionsModal = ({ children }) => {
                 <Dialog.Close asChild>
                   <li
                     className="list-item"
-                    onClick={() => setInitialRemovedCellsNumber(45)}
+                    onClick={() => handleLevelSelect(45)}
                   >
                     <BsClipboard2Check size={26} />
                     Hard
@@ -56,7 +64,7 @@ const GameOptionsModal = ({ children }) => {
                 <Dialog.Close asChild>
                   <li
                     className="list-item"
-                    onClick={() => setInitialRemovedCellsNumber(36)}
+                    onClick={() => handleLevelSelect(36)}
                   >
                     <BsClipboard2Check size={26} />
                     Killer
