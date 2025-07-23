@@ -1,4 +1,4 @@
-import GameOptionsModal from "./modals/test";
+import GameOptionsModal from "./modals/GameOptionsModal";
 
 const NewGameButton = () => {
   return (

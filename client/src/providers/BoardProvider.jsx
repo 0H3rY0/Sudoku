@@ -11,11 +11,13 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [history, setHistory] = useState([]);
   const [notesMode, setNotesMode] = useState(false);
   const [sameValueCells, setSameValueCells] = useState([]);
+  const [initialRemovedCellsNumber, setInitialRemovedCellsNumber] =
+    useState(60);
 
   useEffect(() => {
     const solved = generateEmptyBoard();
     fillBoard(solved);
-    const puzzle = removeCells(solved, 36);
+    const puzzle = removeCells(solved, initialRemovedCellsNumber);
 
     const userBoard = puzzle.map((row) =>
       row.map((cell) =>
@@ -26,7 +28,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setSolvedBoard(solved);
     setInitialBoard(userBoard);
     setBoard(userBoard);
-  }, []);
+  }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
@@ -115,6 +117,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         setMistakes,
         sameValueCells,
         setSameValueCells,
+        setInitialRemovedCellsNumber,
       }}
     >
       {children}
