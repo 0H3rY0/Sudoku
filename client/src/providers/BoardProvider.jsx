@@ -7,10 +7,10 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [solvedBoard, setSolvedBoard] = useState(null);
   const [initialBoard, setInitialBoard] = useState(null);
   const [board, setBoard] = useState(null);
-  const [selectedCell, setSelectedCell] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [selectedCell, setSelectedCell] = useState(null); // probalby delated
+  const [history, setHistory] = useState([]); // probably deleted
   const [notesMode, setNotesMode] = useState(false);
-  const [sameValueCells, setSameValueCells] = useState([]);
+  const [sameValueCells, setSameValueCells] = useState([]); // probably delated
   const [initialRemovedCellsNumber, setInitialRemovedCellsNumber] =
     useState(60);
 
@@ -28,6 +28,10 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setSolvedBoard(solved);
     setInitialBoard(userBoard);
     setBoard(userBoard);
+    setSelectedCell(null);
+    setHistory([]);
+    setSameValueCells([]);
+    setMistakes(0);
   }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
@@ -35,7 +39,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   };
 
   const isValidMove = (row, col, num) => {
-    return solvedBoard[row][col] === num;
+    return solvedBoard[row][col].value === num;
   };
 
   const InsertValue = (num) => {
@@ -63,6 +67,9 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
       newBoard[row][col].notes = [];
 
       if (!isValidMove(row, col, num)) {
+        console.log(solvedBoard);
+        console.log(solvedBoard[row][col]);
+        console.log(isValidMove(row, col, num));
         setMistakes((prev) => prev + 1);
       }
     }
