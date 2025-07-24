@@ -16,6 +16,8 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     newGame: false,
   });
 
+  const [secondsElapsed, setSecondsElapsed] = useState(0);
+
   useEffect(() => {
     const solved = generateEmptyBoard();
     fillBoard(solved);
@@ -34,10 +36,12 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setHistory([]);
     setSameValueCells([]);
     setMistakes(0);
+    setSecondsElapsed(0);
   }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
+    console.log(currentTime);
   };
 
   const isValidMove = (row, col, num) => {
@@ -127,6 +131,8 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         sameValueCells,
         setSameValueCells,
         setInitialRemovedCellsNumber,
+        secondsElapsed,
+        setSecondsElapsed,
       }}
     >
       {children}

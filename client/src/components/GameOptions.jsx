@@ -3,6 +3,7 @@ import { PiEraser } from "react-icons/pi";
 import { FaRegLightbulb } from "react-icons/fa";
 import { BsPencil } from "react-icons/bs";
 import { useBoard } from "../context/BoardContext";
+import Timer from "../components/Timer";
 
 const GameOptions = () => {
   const { clearPickedMove, undoMove, mistakes, notesMode, setNotesMode } =
@@ -16,8 +17,8 @@ const GameOptions = () => {
             Mistakes: {mistakes}/3
           </p>
         </div>
-        <div className="text-gray-400 font-extrabold text-md flex">
-          Time: 00:01
+        <div className="text-gray-400 font-extrabold text-md flex gap-1">
+          Time: <Timer />
         </div>
       </div>
       <div></div>
