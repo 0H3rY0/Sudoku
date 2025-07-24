@@ -1,4 +1,4 @@
-import GameOptionsModal from "./modals/GameOptionsModal";
+import GameOptionsModal from "./modals/GameLevelsModal";
 
 const NewGameButton = () => {
   return (
