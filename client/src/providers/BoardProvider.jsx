@@ -133,6 +133,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         setInitialRemovedCellsNumber,
         secondsElapsed,
         setSecondsElapsed,
+        initialRemovedCellsNumber,
       }}
     >
       {children}

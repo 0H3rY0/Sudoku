@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { levelsMapList } from "../data/levelsMapList";
+import { useBoard } from "../context/BoardContext";
 
 const DifficultyLevel = () => {
-  const levels = ["easy", "medium", "hard"];
-  const [selectedMode, setSelectedMode] = useState("easy");
+  const { initialRemovedCellsNumber } = useBoard();
 
   return (
     <div className="text-gray-400 font-extrabold text-md flex gap-5">
-      <h1 className="p-2 pl-0">Difficulty level: </h1>
+      <h1 className="p-2 pl-0">Difficulty level:</h1>
       <ul className="flex gap-5">
-        {levels.map((item) => (
+        {levelsMapList.map(([levelName, removeCount]) => (
           <li
-            key={item}
-            onClick={() => setSelectedMode(item)}
+            key={levelName}
             className={`hover:bg-purple-100 rounded-md p-2 cursor-pointer ${
-              selectedMode === item ? "text-blue-400" : "text-gray-400"
+              initialRemovedCellsNumber.removeCells === removeCount
+                ? "text-blue-400"
+                : ""
             }`}
           >
-            {item}
+            {levelName}
           </li>
         ))}
       </ul>
