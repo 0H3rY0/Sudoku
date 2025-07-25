@@ -49,13 +49,20 @@ const GameOptions = () => {
           <div
             className={`absolute top-[-25%] left-[50%] bg-slate-300 
           w-10 h-8 rounded-full flex items-center justify-center 
-           ${notesMode ? "text-white bg-blue-400" : ""} `}
+           ${notesMode ? "text-white bg-blue-500" : ""} `}
           >
             {notesMode ? "ON" : "OFF"}
           </div>
         </div>
-        <div className="w-14 h-14 flex items-center justify-center bg-purple-200 rounded-full hover:bg-purple-300">
+        <div className="relative w-14 h-14 flex items-center justify-center bg-purple-200 rounded-full hover:bg-purple-300">
           <FaRegLightbulb size={32} />
+          <div
+            className={`absolute top-[-18%] left-[70%]
+               flex items-center justify-center text-xl 
+           ${notesMode ? "text-white bg-blue-400" : ""} `}
+          >
+            3
+          </div>
         </div>
       </div>
     </>
