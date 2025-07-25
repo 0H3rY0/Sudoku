@@ -17,6 +17,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   });
 
   const [secondsElapsed, setSecondsElapsed] = useState(0);
+  const [hints, setHints] = useState(3);
 
   useEffect(() => {
     const solved = generateEmptyBoard();
@@ -37,6 +38,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setSameValueCells([]);
     setMistakes(0);
     setSecondsElapsed(0);
+    setHints(3);
   }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
@@ -134,6 +136,8 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         secondsElapsed,
         setSecondsElapsed,
         initialRemovedCellsNumber,
+        hints,
+        setHints,
       }}
     >
       {children}

@@ -6,8 +6,15 @@ import { useBoard } from "../context/BoardContext";
 import Timer from "../components/Timer";
 
 const GameOptions = () => {
-  const { clearPickedMove, undoMove, mistakes, notesMode, setNotesMode } =
-    useBoard();
+  const {
+    clearPickedMove,
+    undoMove,
+    mistakes,
+    notesMode,
+    setNotesMode,
+    hints,
+    setHints,
+  } = useBoard();
 
   return (
     <>
@@ -54,14 +61,18 @@ const GameOptions = () => {
             {notesMode ? "ON" : "OFF"}
           </div>
         </div>
-        <div className="relative w-14 h-14 flex items-center justify-center bg-purple-200 rounded-full hover:bg-purple-300">
+        <div
+          onClick={() => setHints((prev) => (prev > 0 ? (prev -= 1) : prev))}
+          className="relative w-14 h-14 flex items-center justify-center
+           bg-purple-200 rounded-full hover:bg-purple-300 cursor-pointer"
+        >
           <FaRegLightbulb size={32} />
           <div
             className={`absolute top-[-18%] left-[70%]
                flex items-center justify-center text-xl 
-           ${notesMode ? "text-white bg-blue-400" : ""} `}
+            `}
           >
-            3
+            {hints}
           </div>
         </div>
       </div>
