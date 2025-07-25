@@ -134,7 +134,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     const { row, col } = emptyCells[randomIndex];
 
     newBoard[row][col].value = solvedBoard[row][col].value;
-    // newBoard[row][col].isHint = true;
+    newBoard[row][col].isHint = true;
 
     setBoard(newBoard);
   };
