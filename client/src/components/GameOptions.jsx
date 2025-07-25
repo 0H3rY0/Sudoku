@@ -14,6 +14,7 @@ const GameOptions = () => {
     setNotesMode,
     hints,
     setHints,
+    insertHintValue,
   } = useBoard();
 
   return (
@@ -62,7 +63,10 @@ const GameOptions = () => {
           </div>
         </div>
         <div
-          onClick={() => setHints((prev) => (prev > 0 ? (prev -= 1) : prev))}
+          onClick={() => {
+            setHints((prev) => (prev > 0 ? (prev -= 1) : prev));
+            hints !== 0 ? insertHintValue() : "";
+          }}
           className="relative w-14 h-14 flex items-center justify-center
            bg-purple-200 rounded-full hover:bg-purple-300 cursor-pointer"
         >
