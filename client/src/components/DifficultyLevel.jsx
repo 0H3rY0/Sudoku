@@ -11,7 +11,7 @@ const DifficultyLevel = () => {
         {levelsMapList.map(([levelName, removeCount]) => (
           <li
             key={levelName}
-            className={`hover:bg-purple-100 rounded-md p-2 cursor-pointer ${
+            className={`rounded-md p-2 ${
               initialRemovedCellsNumber.removeCells === removeCount
                 ? "text-blue-400"
                 : ""
