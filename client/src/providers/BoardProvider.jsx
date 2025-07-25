@@ -11,11 +11,17 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   const [history, setHistory] = useState([]);
   const [notesMode, setNotesMode] = useState(false);
   const [sameValueCells, setSameValueCells] = useState([]);
+  const [initialRemovedCellsNumber, setInitialRemovedCellsNumber] = useState({
+    removeCells: 60,
+    newGame: false,
+  });
+
+  const [secondsElapsed, setSecondsElapsed] = useState(0);
 
   useEffect(() => {
     const solved = generateEmptyBoard();
     fillBoard(solved);
-    const puzzle = removeCells(solved, 36);
+    const puzzle = removeCells(solved, initialRemovedCellsNumber.removeCells);
 
     const userBoard = puzzle.map((row) =>
       row.map((cell) =>
@@ -26,14 +32,20 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setSolvedBoard(solved);
     setInitialBoard(userBoard);
     setBoard(userBoard);
-  }, []);
+    setSelectedCell(null);
+    setHistory([]);
+    setSameValueCells([]);
+    setMistakes(0);
+    setSecondsElapsed(0);
+  }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
+    console.log(currentTime);
   };
 
   const isValidMove = (row, col, num) => {
-    return solvedBoard[row][col] === num;
+    return solvedBoard[row][col].value === num;
   };
 
   const InsertValue = (num) => {
@@ -61,6 +73,9 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
       newBoard[row][col].notes = [];
 
       if (!isValidMove(row, col, num)) {
+        console.log(solvedBoard);
+        console.log(solvedBoard[row][col]);
+        console.log(isValidMove(row, col, num));
         setMistakes((prev) => prev + 1);
       }
     }
@@ -115,6 +130,10 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         setMistakes,
         sameValueCells,
         setSameValueCells,
+        setInitialRemovedCellsNumber,
+        secondsElapsed,
+        setSecondsElapsed,
+        initialRemovedCellsNumber,
       }}
     >
       {children}
