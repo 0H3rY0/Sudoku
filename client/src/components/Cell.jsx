@@ -11,10 +11,11 @@ const Cell = ({
   isSameValue,
   onClick,
 }) => {
-  const { value, notes } = cell;
+  const { value, notes, isHint } = cell;
 
   const getTextColor = () => {
     if (isInitial) return "text-black";
+    if (isHint) return "text-green-500";
     if (value === 0) return "";
     return value === solvedValue ? "text-blue-600" : "text-red-600";
   };

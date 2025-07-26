@@ -17,6 +17,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
   });
 
   const [secondsElapsed, setSecondsElapsed] = useState(0);
+  const [hints, setHints] = useState(3);
 
   useEffect(() => {
     const solved = generateEmptyBoard();
@@ -37,6 +38,7 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     setSameValueCells([]);
     setMistakes(0);
     setSecondsElapsed(0);
+    setHints(3);
   }, [initialRemovedCellsNumber]);
 
   const handleCellClick = (row, col) => {
@@ -113,6 +115,30 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
     });
   };
 
+  const insertHintValue = () => {
+    const newBoard = board.map((row) => row.map((cell) => ({ ...cell })));
+
+    const emptyCells = [];
+
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (newBoard[row][col].value === 0) {
+          emptyCells.push({ row, col });
+        }
+      }
+    }
+
+    if (emptyCells.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    const { row, col } = emptyCells[randomIndex];
+
+    newBoard[row][col].value = solvedBoard[row][col].value;
+    newBoard[row][col].isHint = true;
+
+    setBoard(newBoard);
+  };
+
   return (
     <BoardContext.Provider
       value={{
@@ -134,6 +160,9 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
         secondsElapsed,
         setSecondsElapsed,
         initialRemovedCellsNumber,
+        hints,
+        setHints,
+        insertHintValue,
       }}
     >
       {children}
