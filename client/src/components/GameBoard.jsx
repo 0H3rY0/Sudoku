@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useBoard } from "../context/BoardContext";
 import Cell from "./Cell";
 import { findSameValueCells } from "../providers/boardUtils";
