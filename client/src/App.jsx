@@ -5,16 +5,17 @@ import GameOptions from "./components/GameOptions";
 import PickNumber from "./components/PickNumber";
 import { BoardProvider } from "./providers/BoardProvider";
 import MainTemplate from "./templates/MainTemplate";
+import GameOver from "./components/GameOver";
 
 function App() {
   const [mistakes, setMistakes] = useState(0);
 
   return (
     <MainTemplate>
-      {mistakes > 3 ? (
-        <div>Game over</div>
-      ) : (
-        <BoardProvider mistakes={mistakes} setMistakes={setMistakes}>
+      <BoardProvider mistakes={mistakes} setMistakes={setMistakes}>
+        {mistakes > 3 ? (
+          <GameOver />
+        ) : (
           <div className="flex flex-col gap-3">
             <div>
               <DifficultyLevel />
@@ -29,8 +30,8 @@ function App() {
               </div>
             </div>
           </div>
-        </BoardProvider>
-      )}
+        )}
+      </BoardProvider>
     </MainTemplate>
   );
 }

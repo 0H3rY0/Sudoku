@@ -57,7 +57,7 @@ const GameOptions = () => {
           <div
             className={`absolute top-[-25%] left-[50%] bg-slate-300 
           w-10 h-8 rounded-full flex items-center justify-center 
-           ${notesMode ? "text-white bg-blue-500" : ""} `}
+           ${notesMode ? "text-white bg-blue-400" : ""} `}
           >
             {notesMode ? "ON" : "OFF"}
           </div>
