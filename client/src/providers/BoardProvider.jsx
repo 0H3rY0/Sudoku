@@ -43,7 +43,6 @@ export const BoardProvider = ({ children, mistakes, setMistakes }) => {
 
   const handleCellClick = (row, col) => {
     setSelectedCell({ row, col });
-    console.log(currentTime);
   };
 
   const isValidMove = (row, col, num) => {
