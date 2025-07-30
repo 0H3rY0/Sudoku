@@ -5,7 +5,7 @@ const GameStats = () => {
   const { mistakes } = useBoard();
 
   return (
-    <div className="flex justify-between mb-2">
+    <div className="flex justify-between mb-3 mt-[-12px]">
       <p className="text-gray-400 font-extrabold text-md flex">
         Mistakes: {mistakes}/3
       </p>
