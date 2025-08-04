@@ -1,5 +1,8 @@
 ![image alt](Sudoku-Banner.png)
 
+## 🌐 Website
+https://sudoku-2fua.onrender.com
+
 ## ✍️ Description
 The Sudoku App is a web-based game that allows users to play classic Sudoku in a clean interface. Built with React and Tailwind CSS, it focuses on modular design and user-friendly components.
 
